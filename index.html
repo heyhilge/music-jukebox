@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Hilgendorf | Retro Diner Jukebox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- THE PERSPECTIVE ROOM BASE CONTAINER -->
+    <div class="diner-scene">
+        
+        <!-- STABILIZED JUKEBOX STATION MODULE -->
+        <div class="jukebox-canvas-deck">
+            <img src="jukebox_in_diner.jpg" alt="80s Diner Jukebox Backdrop" class="hardware-backdrop">
+
+            <!-- PINPOINT POSITIONED ACTIVE HOTSPOTS -->
+            <div class="absolute-control-grid">
+                
+                <!-- 1. VINYL CAROUSEL DOCK -->
+                <div class="mechanical-carousel-strip">
+                    <button class="carousel-step-trigger left-trigger" onclick="changeDisc(-1)">
+                        <span class="custom-arrow-icon angle-left"></span>
+                    </button>
+                    
+                    <div class="spinning-record-well">
+                        <div class="vinyl-record" id="vinylRecord">
+                            <div class="groove-depth-rings"></div>
+                            <div class="vintage-center-sticker">
+                                <div class="sticker-song-title" id="labelTitle">-</div>
+                                <div class="sticker-artist-title">M. Hilgendorf</div>
+                            </div>
+                            <div class="spindle-center-axis"></div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-step-trigger right-trigger" onclick="changeDisc(1)">
+                        <span class="custom-arrow-icon angle-right"></span>
+                    </button>
+                </div>
+
+                <!-- 2. INTEGRATED DIGITAL MARQUEE -->
+                <div class="embedded-screen-marquee">
+                    <div class="marquee-title-row" id="marqueeTitle">SELECT A TRACK</div>
+                    <div class="marquee-album-row" id="marqueeAlbum">-</div>
+                    <div class="marquee-coin-slot">
+                        <span class="price-coin-badge">99&cent;</span>
+                        <a id="paypalTrackBtn" href="#" target="_blank" class="deposit-coin-lever">DEPOSIT 99&cent; TO BUY</a>
+                    </div>
+                </div>
+
+                <!-- 3. PLAYBACK CONTROL PANEL WITH INTEGRATED DROPDOWN MENU -->
+                <div class="lower-playback-strip">
+                    <div class="playback-top-row">
+                        <button id="playBtn" class="molded-core-play-btn" onclick="togglePlay()">PLAY</button>
+                        
+                        <!-- SELECT TRACK NEON DROPDOWN CONTROLLER -->
+                        <div class="retro-dropdown-container">
+                            <select id="trackSelectorDropdown" onchange="handleDropdownSelect(this)">
+                                <option value="" disabled selected>SELECT TRACK</option>
+                                <optgroup label="WHITE STONE">
+                                    <option value="0">1. Dance Of The Guitars</option>
+                                    <option value="1">2. Artificial Fruit</option>
+                                    <option value="2">3. You Only Know Him By His Name</option>
+                                    <option value="3">4. Give Me Jesus (Island Version)</option>
+                                    <option value="4">5. White Stone</option>
+                                    <option value="5">6. Do Right</option>
+                                    <option value="6">7. The Light Of The World</option>
+                                    <option value="7">8. With Us You Belong</option>
+                                    <option value="8">9. Sing Praises</option>
+                                    <option value="9">10. Still Small Voice (Live)</option>
+                                    <option value="10">11. Soul (Wedding Song)</option>
+                                    <option value="11">12. Our Father</option>
+                                </optgroup>
+                                <optgroup label="MICHAEL D - UNPLUGGED">
+                                    <option value="12">13. Lovely Lady</option>
+                                    <option value="13">14. On My Knees</option>
+                                    <option value="14">15. Heart and Mind</option>
+                                    <option value="15">16. Darlin'</option>
+                                    <option value="16">17. Her Eyes</option>
+                                    <option value="17">18. Why</option>
+                                    <option value="18">19. Sure Is Good</option>
+                                    <option value="19">20. Sing Praises Intro (talk)</option>
+                                    <option value="20">21. Sing Praises</option>
+                                    <option value="21">22. You Need Jesus</option>
+                                    <option value="22">23. Artificial Fruit Intro (talk)</option>
+                                    <option value="23">24. Artificial Fruit</option>
+                                    <option value="24">25. You Only Know Him By His Name</option>
+                                    <option value="25">26. The Light Of The World</option>
+                                    <option value="26">27. Our Father</option>
+                                    <option value="27">28. My Spiritual Awakening (talk)</option>
+                                    <option value="28">29. Sure Is Good (4trk Update)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-strip" onclick="seekAudio(event)">
+                        <div class="progress-bar-core" id="progressBar"></div>
+                    </div>
+                    <div class="clock-time-counter" id="timeDisplay">0:00 / 0:00</div>
+                </div>
+
+                <!-- 4. HARDWARE DISPLAY NAV ROW BUTTONS -->
+                <div class="hardware-nav-cluster">
+                    <button class="mechanical-stud-btn" onclick="openModal('bioModal')">BIO</button>
+                    <button class="mechanical-stud-btn" onclick="openModal('whitestoneModal')">WHITE STONE</button>
+                    <button class="mechanical-stud-btn" onclick="openModal('unpluggedModal')">MICHAEL D</button>
+                    <button class="mechanical-stud-btn" onclick="openModal('friendsModal')">FRIENDS</button>
+                </div>
+
+            </div> <!-- END GRID OVERLAY -->
+        </div> <!-- END CANVAS -->
+        
+    </div> <!-- END SCENE -->
+
+    <!-- POP-UP MODAL BOX INTERFACES -->
+    <!-- 1. BIO PAGE -->
+    <div id="bioModal" class="modal">
+        <div class="modal-content bio-modal-override">
+            <span class="close-btn" onclick="closeModal('bioModal')">&times;</span>
+            <div class="full-screen-bio-banner">
+                <img src="bio-banner.jpg" alt="Bio Banner" class="banner-image-underlay" onerror="this.style.display='none'">
+                <img src="bio-photo.jpg" alt="Michael Hilgendorf" class="inset-profile-photo" onerror="this.src='https://placehold.co'">
+            </div>
+            <div class="bio-text-container">
+                <h2 class="modal-header">ARTIST BIO</h2>
+                <p class="modal-text">
+                    Michael D Hilgendorf is a musician, songwriter and performer of original Christian and secular songs (NON AI). The styles are rock, blues and folk. Visit: michaelhilgendorf.com for more.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. WHITE STONE CREDITS & EXPANDED THANK YOU SECTION -->
+    <div id="whitestoneModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close-btn" onclick="closeModal('whitestoneModal')">&times;</span>
+            <h2 class="modal-header">WHITE STONE CREDITS</h2>
+            <div class="credits-layout scrolling-credits-box">
+                <img src="whitestone.jpg" alt="White Stone Cover" class="modal-img" onerror="this.src='https://placehold.co'">
+                <div class="credits-text">
+                    <p><strong>Released:</strong> 2026</p>
+                    <p class="credit-highlight">All songs written by Michael Hilgendorf except "Still Small Voice" written by Jerry Gaff.</p>
+                    <p><strong>Michael D Hilgendorf:</strong> Lead and harmony vocals, 12 string acoustic guitar, 6 string acoustic, electric rhythm guitar and mellow leads, 5 string bass, Drum machine programming.</p>
+                    <p><strong>Alan Hilgendorf:</strong> Harmony vocals (including Dylan impression in "The Light"), lightning lead guitar, Spanish guitar, synthesizer.</p>
+                    <p><strong>Jerry Gaff:</strong> Acoustic Guitar on Still Small Voice, 1 of 3 monks on "Sing Praises".</p>
+                    <p><strong>My Children Chris, Amy, Lisa:</strong> Nagging children on "Artificial Fruit".</p>
+                    <p><strong>Acapella Choir in Good News Boogie:</strong> Haley Hilgendorf, Rick Paliani, Doug Sharp and Vince Weidig.</p>
+                    
+                    <hr class="neon-line">
+                    <p class="thank-you-statement">

@@ -1,0 +1,391 @@
+@import url('https://googleapis.com');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'VT323', monospace;
+}
+
+body, html {
+    background-color: #040206;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* RESPONSIVE PORTRAIT ASPECT RATIO FRAME FOR DESKTOP & MOBILE */
+.diner-scene {
+    width: 100vw;
+    height: 100vh;
+    max-width: 500px;
+    max-height: 888px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 9 / 16;
+}
+
+/* CANVAS DOCK THAT PROPORTIONALLY SCALES ON ALL SCREEN SIZES */
+.jukebox-canvas-deck {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hardware-backdrop {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    display: block;
+}
+
+/* INDEPENDENT POSITIONING OVERLAY LAYER */
+.absolute-control-grid {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 20;
+}
+
+/* 1. VINYL CAROUSEL DOCK */
+.mechanical-carousel-strip {
+    position: absolute;
+    top: 24.5%; 
+    left: 51%; 
+    width: 50%;
+    height: 14%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carousel-step-trigger {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #00ff00;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-step-trigger:hover { background: #00ff00; }
+.carousel-step-trigger:hover .custom-arrow-icon { border-color: #000; }
+
+/* GRAPHIC MOBILE ARROW HOTFIX CHEVRONS */
+.custom-arrow-icon {
+    width: 6px;
+    height: 6px;
+    border-bottom: 2px solid #00ff00;
+    border-left: 2px solid #00ff00;
+    display: inline-block;
+}
+.angle-left { transform: rotate(45deg); margin-left: 2px; }
+.angle-right { transform: rotate(-135deg); margin-right: 2px; }
+
+.spinning-record-well {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vinyl-record {
+    width: 84px;
+    height: 84px;
+    background: radial-gradient(circle, #1a1a1a 20%, #2b2b2b 30%, #0d0d0d 65%);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.9);
+}
+.vinyl-record.spinning { animation: platterSpinEngine 2.5s linear infinite; }
+@keyframes platterSpinEngine { 100% { transform: rotate(360deg); } }
+
+.groove-depth-rings {
+    position: absolute;
+    width: 86%; height: 86%;
+    border-radius: 50%;
+    border: 1px dashed rgba(0,255,0,0.06);
+}
+
+.vintage-center-sticker {
+    width: 36px; height: 36px;
+    background: #000;
+    border: 1px solid #00ff00;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1px;
+}
+
+.sticker-song-title {
+    font-size: 0.45rem;
+    color: #00ff00;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 30px;
+}
+.sticker-artist-title { font-size: 0.35rem; color: #007700; }
+
+.spindle-center-axis {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: #000;
+    border: 1px solid #00ff00;
+    border-radius: 50%;
+}
+
+/* 2. NOW PLAYING MARQUEE SCREEN */
+.embedded-screen-marquee {
+    position: absolute;
+    top: 38%;
+    left: 50%; 
+    width: 82%; 
+    height: 11%;
+    transform: translate(-50%, -50%); 
+    background: rgba(0, 0, 0, 0.88);
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 6px rgba(0, 255, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.marquee-title-row {
+    font-size: clamp(10px, 3.2vw, 15px); 
+    color: #00ff00;
+    text-shadow: 0 0 3px #00ff00;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+}
+
+.marquee-album-row {
+    font-size: clamp(5.5px, 1.6vw, 7.2px); 
+    color: #aeffae;
+    margin-top: 1px;
+}
+
+.marquee-coin-slot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.price-coin-badge {
+    font-size: clamp(5.5px, 1.4vw, 7.2px); 
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.deposit-coin-lever {
+    background: #00ff00;
+    color: #000;
+    text-decoration: none;
+    font-size: clamp(5.5px, 1.4vw, 7.2px); 
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1;
+}
+.deposit-coin-lever:hover { background: #000; color: #00ff00; }
+
+/* 3. PLAYBACK CONSOLE STATION STRIP */
+.lower-playback-strip {
+    position: absolute;
+    top: 56.5%; 
+    left: 50%;
+    width: 45%;
+    height: 9%;
+    transform: translate(-50%, -50%); 
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    padding: 4px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* CENTERED CONSOLE ACTION ALIGNMENTS */
+.playback-top-row {
+    display: flex;
+    width: 100%;
+    justify-content: center; /* Centered play and dropdown group horizontally */
+    align-items: center;
+    gap: 8px;
+}
+
+.molded-core-play-btn {
+    background: #000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 2px 14px;
+    font-size: clamp(10px, 2.5vw, 13px);
+    font-weight: bold;
+    cursor: pointer;
+}
+.molded-core-play-btn:hover { background: #00ff00; color: #000; }
+
+/* GREEN RETRO DROPDOWN INPUT BOX OVERRIDES */
+.retro-dropdown-container {
+    display: flex;
+    align-items: center;
+}
+
+.retro-dropdown-container select {
+    background: #000000; /* Set housing interior background dark black */
+    color: #00ff00; /* Solid radioactive glow text filter */
+    border: 1px solid #00ff00;
+    font-size: clamp(8px, 1.8vw, 11px);
+    font-weight: bold;
+    padding: 2px 4px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Ensure the selector drop menu expansion options are fully customized */
+.retro-dropdown-container select option, 
+.retro-dropdown-container select optgroup {
+    background-color: #000000 !important; /* Force matching native black panels */
+    color: #00ff00 !important;
+}
+
+.progress-bar-strip {
+    width: 100%;
+    height: 4px;
+    background: #111;
+    border: 1px solid #00ff00;
+    cursor: pointer;
+}
+
+.progress-bar-core {
+    width: 0%; height: 100%;
+    background: #00ff00;
+}
+
+.clock-time-counter {
+    font-size: clamp(7.5px, 1.8vw, 9.75px); 
+    color: #00ff00;
+}
+
+/* 4. HARDWARE NAVIGATION ROW */
+.hardware-nav-cluster {
+    position: absolute;
+    top: 71.5%; 
+    left: 50%;
+    width: 45%;
+    height: 6%; 
+    transform: translate(-50%, -50%); 
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.mechanical-stud-btn {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.85);
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    font-size: clamp(8px, 2vw, 11px); 
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+}
+.mechanical-stud-btn:hover { background: #00ff00; color: #000; box-shadow: 0 0 6px #00ff00; }
+
+/* SYSTEM POPUP DIALOG WINDOWS */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #000000;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    padding: 20px;
+    width: 85%;
+    max-width: 400px;
+    position: relative;
+}
+
+.large-modal { 
+    max-width: 480px; 
+    width: 90%;
+    height: auto;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.scrolling-credits-box {
+    overflow-y: auto;
+    max-height: 65vh;
+    padding-right: 8px;
+    display: block !important;
+}
+
+.scrolling-credits-box::-webkit-scrollbar, .friends-list::-webkit-scrollbar { width: 4px; }
+.scrolling-credits-box::-webkit-scrollbar-thumb, .friends-list::-webkit-scrollbar-thumb { background: #00ff00; }
+
+.close-btn {
+    position: absolute;
+    top: 2px; right: 10px;
+    color: #00ff00;
+    font-size: 2.2rem;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.bio-modal-override { max-width: 400px; padding: 0 0 15px 0; overflow: hidden; }
+.full-screen-bio-banner {
+    width: 100%; height: 110px; position: relative;
+    display: flex; justify-content: center; align-items: center;
+    border-bottom: 2px solid #00ff00; margin-bottom: 45px; background: #111;
+}
+
+.banner-image-underlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.inset-profile-photo { position: absolute; bottom: -35px; width: 75px; height: 75px; border-radius: 50%; border: 2px solid #00ff00; box-shadow: 0 4px 10px rgba(0,0,0,0.8), 0 0 8px #00ff00; object-fit: cover; background: #000; z-index: 5; }
+
+.bio-text-container { padding: 0 15px; }
+.modal-header { font-size: 1.6rem; text-align: center; margin-bottom: 10px; text-shadow: 0 0 5px #00ff00; color: #00ff00; }
+.credits-layout { display: flex; gap: 15px; align-items: flex-start; flex-direction: column; margin-bottom: 15px; }
+.modal-img { width: 110px; height: 110px; border: 1px solid #00ff00; object-fit: cover; margin: 0 auto 10px auto; display: block; }
+.modal-text, .credits-text { font-size: 1.1rem; color: #00ff00; line-height: 1.4; width: 100%; }
+.credit-highlight { color: #fff; font-weight: bold; margin-bottom: 5px; }
+.thank-you-statement { color: #aeffae; font-style: italic; background: #050505; padding: 10px; border-left: 2px solid #00ff00; }
+.album-desc-caps { color: #fff; font-weight: bold; text-align: center; font-size: 1.2rem; }
